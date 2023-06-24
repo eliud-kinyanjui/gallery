@@ -5,6 +5,8 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 echo 'Clone App Repository'
+                git 'https://github.com/eliud-kinyanjui/gallery'
+                slackSend channel: 'eliud_ip1', color: 'good', message: 'Git Clone'
             }
         }
         stage('Install Dependancies') {
