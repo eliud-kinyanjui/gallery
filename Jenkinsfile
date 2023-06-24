@@ -30,13 +30,20 @@ pipeline {
         stage('Deploy to Heroku') {
             steps {
                 echo 'Deploy App to Heroku'
-                
-                slackSend(color: 'good', message: "Deploying App to Heroku - Job Name - ${JOB_NAME} | Build number ${BUILD_NUMBER} | link ${APP_LINK}")
-                
+            
                 withCredentials([usernameColonPassword(credentialsId: 'heroku', variable: 'HEROKU_CREDENTIALS')]){
                     sh 'git push https://${HEROKU_CREDENTIALS}@git.heroku.com/young-mountain-18198.git master'
                 }
             }
+        }
+    }
+    post {
+        success {
+            slackSend(color: 'good', message: "Gallery App deployment successful. Job Name - ${JOB_NAME} | Build number ${BUILD_NUMBER} | link ${APP_LINK}")
+        }
+        
+        failure {
+            slackSend(color: 'danger', message: "Gallery App deployment faield. Job Name - ${JOB_NAME} | Build number ${BUILD_NUMBER}")
         }
     }
 }
