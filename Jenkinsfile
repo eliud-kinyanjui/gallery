@@ -31,7 +31,7 @@ pipeline {
             steps {
                 echo 'Deploy App to Heroku'
                 
-                slackSend channel: 'eliud_ip1', color: 'good', message: 'Deploying App to Heroku - Job Name - ${JOB_NAME} | Build number ${BUILD_NUMBER} | link ${APP_LINK}'
+                slackSend(color: 'good', message: "Deploying App to Heroku - Job Name - ${JOB_NAME} | Build number ${BUILD_NUMBER} | link ${APP_LINK}")
                 
                 withCredentials([usernameColonPassword(credentialsId: 'heroku', variable: 'HEROKU_CREDENTIALS')]){
                     sh 'git push https://${HEROKU_CREDENTIALS}@git.heroku.com/young-mountain-18198.git master'
