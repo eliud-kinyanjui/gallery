@@ -23,7 +23,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 echo 'Run npm run test'
-                sh 'npm run test'
+                sh 'npm run tests'
             }
         }
 
@@ -41,7 +41,7 @@ pipeline {
         success {
             slackSend(color: 'good', message: "Gallery App deployment successful. Job Name - ${JOB_NAME} | Build number ${BUILD_NUMBER} | link ${APP_LINK}")
         }
-        
+
         failure {
             slackSend(color: 'danger', message: "Gallery App deployment faield. Job Name - ${JOB_NAME} | Build number ${BUILD_NUMBER}")
         }
