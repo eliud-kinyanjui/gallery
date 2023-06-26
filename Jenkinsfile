@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    tools {
+        nodejs 'NodeJS-Latest'
+    }
+
+
     environment {
         APP_LINK = 'https://young-mountain-18198-00c30b751509.herokuapp.com'
     }
@@ -43,6 +48,7 @@ pipeline {
         }
 
         failure {
+            emailext attachLog: true, body: 'See attached build log report', recipientProviders: [buildUser()], subject: "Job Name - ${JOB_NAME} | Build number ${BUILD_NUMBER}"
             slackSend(color: 'danger', message: "Gallery App deployment faield. Job Name - ${JOB_NAME} | Build number ${BUILD_NUMBER}")
         }
     }
